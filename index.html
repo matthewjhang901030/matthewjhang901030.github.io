@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11501_CS203A | Matthew Jhang</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;800&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #0f1626;
+            --bg-card: #131b2e;
+            --border: #1e2a44;
+            --accent-cyan: #00e5ff;
+            --accent-purple: #a855f7;
+            --accent-green: #22d3a6;
+            --text-primary: #e6edf7;
+            --text-secondary: #8b98b0;
+            --text-dim: #5a6680;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ===== ANIMATED BACKGROUND GRID ===== */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image:
+                linear-gradient(rgba(0, 229, 255, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 229, 255, 0.04) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ===== GLOW ORBS ===== */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.35;
+            z-index: 0;
+            pointer-events: none;
+            animation: float 12s ease-in-out infinite;
+        }
+        .orb-1 {
+            width: 400px; height: 400px;
+            background: var(--accent-cyan);
+            top: -100px; left: -100px;
+        }
+        .orb-2 {
+            width: 350px; height: 350px;
+            background: var(--accent-purple);
+            bottom: -100px; right: -100px;
+            animation-delay: -6s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -30px) scale(1.1); }
+        }
+
+        /* ===== CONTAINER ===== */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 24px;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .terminal-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-radius: 999px;
+            padding: 6px 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent-cyan);
+            margin-bottom: 24px;
+            letter-spacing: 0.05em;
+        }
+        .terminal-badge .dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            box-shadow: 0 0 10px var(--accent-green);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        h1 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        .subtitle .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1.1em;
+            background: var(--accent-cyan);
+            margin-left: 4px;
+            vertical-align: text-bottom;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 229, 255, 0.4);
+            box-shadow: 0 20px 40px -20px rgba(0, 229, 255, 0.3);
+        }
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 800;
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.15), rgba(168, 85, 247, 0.15));
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            color: var(--accent-cyan);
+            flex-shrink: 0;
+        }
+
+        .card-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: 0.02em;
+        }
+
+        /* ===== INFO LIST ===== */
+        .info-list {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+        }
+
+        .info-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.02);
+            border-left: 3px solid var(--accent-cyan);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .info-list li:hover {
+            background: rgba(0, 229, 255, 0.06);
+            transform: translateX(4px);
+        }
+
+        .info-list .key {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            min-width: 110px;
+            flex-shrink: 0;
+        }
+        .info-list .value {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        .info-list .value.highlight {
+            color: var(--accent-cyan);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* ===== DESCRIPTION ===== */
+        .description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .description code {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(0, 229, 255, 0.1);
+            color: var(--accent-cyan);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        /* ===== LEARNED LIST ===== */
+        .learned-list {
+            list-style: none;
+            display: grid;
+            gap: 12px;
+        }
+
+        .learned-list li {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            background: linear-gradient(90deg, rgba(0, 229, 255, 0.05), transparent);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .learned-list li::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-cyan), var(--accent-purple));
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.3s ease;
+        }
+
+        .learned-list li:hover {
+            background: linear-gradient(90deg, rgba(0, 229, 255, 0.1), transparent);
+            border-color: rgba(0, 229, 255, 0.4);
+            transform: translateX(6px);
+        }
+        .learned-list li:hover::before {
+            transform: scaleY(1);
+        }
+
+        .check-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(34, 211, 166, 0.15);
+            border: 1px solid var(--accent-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-green);
+            font-size: 0.75rem;
+            font-weight: 800;
+            flex-shrink: 0;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+            color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+        }
+        footer .heart {
+            color: var(--accent-purple);
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            .container { padding: 40px 16px; }
+            .card { padding: 24px 20px; }
+            .info-list .key { min-width: 90px; font-size: 0.8rem; }
+            .info-list li { flex-direction: column; gap: 4px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background effects -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="terminal-badge">
+                <span class="dot"></span>
+                <span>~/11501_CS203A $ status: active</span>
+            </div>
+            <h1>11501_CS203A</h1>
+            <p class="subtitle">
+                <span id="typed"></span><span class="cursor"></span>
+            </p>
+        </header>
+
+        <!-- Course Information -->
+        <section class="card">
+            <div class="card-header">
+                <div class="card-icon">&lt;/&gt;</div>
+                <h2 class="card-title">Course Information</h2>
+            </div>
+            <ul class="info-list">
+                <li>
+                    <span class="key">Course</span>
+                    <span class="value highlight">CS203A</span>
+                </li>
+                <li>
+                    <span class="key">Semester</span>
+                    <span class="value">11501</span>
+                </li>
+                <li>
+                    <span class="key">University</span>
+                    <span class="value">Yuan Ze University (YZU)</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Student Information -->
+        <section class="card">
+            <div class="card-header">
+                <div class="card-icon">@</div>
+                <h2 class="card-title">Student Information</h2>
+            </div>
+            <ul class="info-list">
+                <li>
+                    <span class="key">Name</span>
+                    <span class="value">Matthew Jhang (張福林)</span>
+                </li>
+                <li>
+                    <span class="key">Student ID</span>
+                    <span class="value highlight">s1113350</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Repository Description -->
+        <section class="card">
+            <div class="card-header">
+                <div class="card-icon">#</div>
+                <h2 class="card-title">Repository Description</h2>
+            </div>
+            <p class="description">
+                This repository serves as a <code>living document</code> to record what I learned
+                from the CS203A course. It contains course notes, assignments,
+                and learning materials.
+            </p>
+        </section>
+
+        <!-- What I Learned -->
+        <section class="card">
+            <div class="card-header">
+                <div class="card-icon">✓</div>
+                <h2 class="card-title">What I Learned</h2>
+            </div>
+            <ul class="learned-list">
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>Git and GitHub basics</span>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>Markdown documentation</span>
+                </li>
+                <li>
+                    <span class="check-icon">✓</span>
+                    <span>GitHub Pages deployment</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>Built with <span class="heart">♥</span> using HTML &amp; CSS</p>
+            <p style="margin-top: 6px;">© 2026 Matthew Jhang · Yuan Ze University</p>
+        </footer>
+    </div>
+
+    <!-- Typing effect -->
+    <script>
+        const text = "Course Repository · Yuan Ze University";
+        const el = document.getElementById('typed');
+        let i = 0;
+
+        function type() {
+            if (i < text.length) {
+                el.textContent += text.charAt(i);
+                i++;
+                setTimeout(type, 60);
+            }
+        }
+        setTimeout(type, 500);
+    </script>
+</body>
+</html>
