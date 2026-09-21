@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>11501 Courses | CS203A & CI001 | Matthew Jhang</title>
+    <meta name="description" content="CS203A &amp; CI001 course portfolio by Matthew Jhang at Yuan Ze University">
+    <title>11501 Courses | CS203A &amp; CI001 | Matthew Jhang</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;800&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;800&amp;family=Inter:wght@300;400;600;800&amp;display=swap" rel="stylesheet">
     <style>
         /* ===== RESET & BASE ===== */
         * {
@@ -139,6 +140,7 @@
             font-family: 'JetBrains Mono', monospace;
             color: var(--text-secondary);
             font-size: 0.95rem;
+            min-height: 1.7em;
         }
         .subtitle .cursor {
             display: inline-block;
@@ -291,6 +293,10 @@
             color: var(--accent-cyan);
             font-family: 'JetBrains Mono', monospace;
         }
+        .info-list .value.highlight-purple {
+            color: var(--accent-purple);
+            font-family: 'JetBrains Mono', monospace;
+        }
 
         /* ===== DESCRIPTION ===== */
         .description {
@@ -404,30 +410,39 @@
             .course-grid { grid-template-columns: 1fr; }
             .info-list li { flex-direction: column; gap: 2px; }
         }
+
+        /* ===== REDUCED MOTION ===== */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Background effects -->
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
+    <div class="orb orb-1" aria-hidden="true"></div>
+    <div class="orb orb-2" aria-hidden="true"></div>
 
     <div class="container">
         <!-- Header -->
         <header>
             <div class="terminal-badge">
-                <span class="dot"></span>
+                <span class="dot" aria-hidden="true"></span>
                 <span>~/11501_YZU $ courses: CS203A &amp; CI001 [active]</span>
             </div>
             <h1>CS203A &amp; CI001</h1>
             <p class="subtitle">
-                <span id="typed"></span><span class="cursor"></span>
+                <span id="typed"></span><span class="cursor" aria-hidden="true"></span>
             </p>
         </header>
 
         <!-- Course Information (Split layout for 2 courses) -->
         <section class="card">
             <div class="card-header">
-                <div class="card-icon">&lt;/&gt;</div>
+                <div class="card-icon" aria-hidden="true">&lt;/&gt;</div>
                 <h2 class="card-title">Course Information</h2>
             </div>
             <div class="course-grid">
@@ -456,7 +471,7 @@
                     <ul class="info-list">
                         <li>
                             <span class="key">Code</span>
-                            <span class="value highlight" style="color: var(--accent-purple);">CI001</span>
+                            <span class="value highlight-purple">CI001</span>
                         </li>
                         <li>
                             <span class="key">Semester</span>
@@ -474,7 +489,7 @@
         <!-- Student Information -->
         <section class="card">
             <div class="card-header">
-                <div class="card-icon">@</div>
+                <div class="card-icon" aria-hidden="true">@</div>
                 <h2 class="card-title">Student Information</h2>
             </div>
             <ul class="info-list">
@@ -492,7 +507,7 @@
         <!-- Repository Description -->
         <section class="card">
             <div class="card-header">
-                <div class="card-icon">#</div>
+                <div class="card-icon" aria-hidden="true">#</div>
                 <h2 class="card-title">Repository Description</h2>
             </div>
             <p class="description">
@@ -505,7 +520,7 @@
         <!-- What I Learned (Categorized by Course) -->
         <section class="card">
             <div class="card-header">
-                <div class="card-icon">✓</div>
+                <div class="card-icon" aria-hidden="true">✓</div>
                 <h2 class="card-title">What I Learned</h2>
             </div>
 
@@ -513,15 +528,15 @@
             <div class="section-label">CS203A Modules</div>
             <ul class="learned-list">
                 <li>
-                    <span class="check-icon">✓</span>
+                    <span class="check-icon" aria-hidden="true">✓</span>
                     <span>Git version control &amp; GitHub workflow</span>
                 </li>
                 <li>
-                    <span class="check-icon">✓</span>
+                    <span class="check-icon" aria-hidden="true">✓</span>
                     <span>Technical documentation with Markdown</span>
                 </li>
                 <li>
-                    <span class="check-icon">✓</span>
+                    <span class="check-icon" aria-hidden="true">✓</span>
                     <span>Automated deployment via GitHub Pages</span>
                 </li>
             </ul>
@@ -530,15 +545,15 @@
             <div class="section-label" style="margin-top: 24px;">CI001 Modules</div>
             <ul class="learned-list">
                 <li>
-                    <span class="check-icon purple">✓</span>
+                    <span class="check-icon purple" aria-hidden="true">✓</span>
                     <span>C++ OOP principles: Classes, Encapsulation &amp; Scope</span>
                 </li>
                 <li>
-                    <span class="check-icon purple">✓</span>
+                    <span class="check-icon purple" aria-hidden="true">✓</span>
                     <span>Constructors, Destructors &amp; Member Initializer Lists</span>
                 </li>
                 <li>
-                    <span class="check-icon purple">✓</span>
+                    <span class="check-icon purple" aria-hidden="true">✓</span>
                     <span>Object Relationships (Composition) &amp; Memory Safety</span>
                 </li>
             </ul>
@@ -553,18 +568,28 @@
 
     <!-- Typing effect -->
     <script>
-        const text = "CS203A & CI001 Portfolio · Yuan Ze University";
-        const el = document.getElementById('typed');
-        let i = 0;
+        (function () {
+            const text = "CS203A & CI001 Portfolio · Yuan Ze University";
+            const el = document.getElementById('typed');
+            if (!el) return;
 
-        function type() {
-            if (i < text.length) {
-                el.textContent += text.charAt(i);
-                i++;
-                setTimeout(type, 50);
+            // Respect users who prefer reduced motion
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (prefersReduced) {
+                el.textContent = text;
+                return;
             }
-        }
-        setTimeout(type, 400);
+
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    el.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(type, 50);
+                }
+            }
+            setTimeout(type, 400);
+        })();
     </script>
 </body>
 </html>
